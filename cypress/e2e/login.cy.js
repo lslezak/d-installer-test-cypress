@@ -5,14 +5,16 @@ describe('The login page', () => {
     cy.main_page();
   });
 
-  // TODO: read the credentials from a config file or from environment
   // TODO: skip these tests when the D-Installer is running locally
   //       (https://localhost:9090)
 
   it('allows root to login', () => {
+    let login = Cypress.env('LOGIN_USER') || 'root';
+    let password = Cypress.env('LOGIN_PASSWORD') || 'linux';
+
     // wait until the login form is visible
-    cy.get('#login-user-input').should('be.visible').type('root');
-    cy.get('#login-password-input').type('linux');
+    cy.get('#login-user-input').should('be.visible').type(login);
+    cy.get('#login-password-input').type(password);
     cy.get('#login-button').click();
 
     // the login button disappears

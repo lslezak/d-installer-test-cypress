@@ -3,15 +3,16 @@
 
 // log into the D-Installer as root
 // TODO: optionally read the credentials from the environment
-Cypress.Commands.add('login', (login = 'root', password = 'linux') => {
+Cypress.Commands.add('login', () => {
   // authenticate via API to make it faster
+  let login = Cypress.env('LOGIN_USER') || 'root';
+  let password = Cypress.env('LOGIN_PASSWORD') || 'linux';
+
   cy.request({
     url: 'cockpit/login',
     auth: {
-      // username: Cypress.env('credentials').username,
-      // password: Cypress.env('credentials').password
-      username: 'root',
-      password: 'linux'
+      username: login,
+      password: password
     }
   });
 });
